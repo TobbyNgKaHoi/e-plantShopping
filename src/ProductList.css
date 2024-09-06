@@ -39,6 +39,11 @@ body {
    
 }
 
+.cart-quantity {
+    margin-right: -1em;
+    font-size: smaller;
+}
+
 /* Product Grid */
 .product-grid {
     display:flex;
@@ -209,6 +214,10 @@ body {
     margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
+  }
+  
+  .btn-disabled {
+    cursor: not-allowed !important;
   }
   
   .product-button:hover {

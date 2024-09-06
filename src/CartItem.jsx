@@ -25,7 +25,7 @@ const CartItem = ({ onContinueShopping }) => {
   };
 
   const handleDecrement = (item) => {
-    if (item.quantity > 0) {
+    if (item.quantity > 1) {
         dispatch(updateQuantity({name: item.name, quantity: item.quantity - 1}));  
     }
   };
@@ -50,7 +50,7 @@ const CartItem = ({ onContinueShopping }) => {
               <div className="cart-item-name">{item.name}</div>
               <div className="cart-item-cost">${item.cost}</div>
               <div className="cart-item-quantity">
-                <button className="cart-item-button cart-item-button-dec" onClick={() => handleDecrement(item)}>-</button>
+                <button className={item.quantity === 1 ? "cart-item-button cart-item-button-dec btn-disabled" : "cart-item-button cart-item-button-dec"} onClick={() => handleDecrement(item)} >-</button>
                 <span className="cart-item-quantity-value">{item.quantity}</span>
                 <button className="cart-item-button cart-item-button-inc" onClick={() => handleIncrement(item)}>+</button>
               </div>
