@@ -1,9 +1,24 @@
 import React, { useState,useEffect } from 'react';
 import './ProductList.css'
+import { addItem } from './CartSlice';
+import { useDispatch } from 'react-redux';
 import CartItem from './CartItem';
 function ProductList() {
+    const [addedToCart, setAddedToCart] = useState({});
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+
+    const dispatch = useDispatch();
+
+    const handleAddToCart = (plant) => {
+        dispatch(addItem(plant));
+        setAddedToCart(prevState => ({
+            ...prevState,
+            [plant.name]: true, // Set the product name as key and value as true
+        }))
+
+        console.log('addedToCart: ', addedToCart);
+    }
 
     const plantsArray = [
         {
@@ -232,6 +247,10 @@ function ProductList() {
     fontSize: '30px',
     textDecoration: 'none',
    }
+
+
+
+
    const handleCartClick = (e) => {
     e.preventDefault();
     setShowCart(true); // Set showCart to true when cart icon is clicked
@@ -268,7 +287,30 @@ const handlePlantsClick = (e) => {
         </div>
         {!showCart? (
         <div className="product-grid">
-
+            { plantsArray.map((category, categoryIndex) => (
+                <div key={categoryIndex}>
+                    <h1><div>{category.category}</div></h1>
+                    <div className="product-list">
+                        {category.plants.map((plant, plantIndex) => (
+                            <div className="product-card" key={plantIndex}>
+                                <img className="product-image" src={plant.image} alt={plant.name} />
+                                <div className="product-title">{plant.name}</div>
+                                <div className="product-cost">{plant.cost}</div>
+                                <div className="product-description">{plant.description}</div>
+                                <button className="product-button" onClick={() => handleAddToCart(plant)} disabled={addedToCart[plant.name]}>Add to Cart</button>
+                                <span></span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                
+            ))}
+            
+            {/* <div>
+                { addedToCart.map((item, index) => (
+                    <div key={index}>{item.name}, {item.selected}</div>
+                ))}
+            </div> */}
 
         </div>
  ) :  (
